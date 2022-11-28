@@ -1,0 +1,25 @@
+#version 430
+
+layout(std430, binding = 1) buffer ants_pos {
+    vec2 pos[];
+};
+
+layout(std430, binding = 2) buffer ants_vel {
+    vec2 vel[];
+};
+
+void main() {
+    uint i = gl_GlobalInvocationID.x;
+    //pos[i] += 0.16*vel[i];
+    pos[i].x = 0;
+    pos[i].y = 0;
+
+    if (pos[i].x < 0 || pos[i].x > 800) {
+        pos[i].x = clamp(pos[i].x, 0, 800);
+        vel[i].x = -vel[i].x;
+    }
+    if (pos[i].y < 0 || pos[i].y > 600) {
+        pos[i].y = clamp(pos[i].y, 0, 600);
+        vel[i].y = -vel[i].y;
+    }
+}
